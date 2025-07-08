@@ -29,7 +29,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/createBlog", (req, res) => {
-  res.render("createBlog");
+  res.render("createBlog",{
+    category:"None"
+  });
 });
 
 app.get("/Technology", (req, res) => {
@@ -66,9 +68,10 @@ app.get("/Business", (req, res) => {
 app.post("/submitBlog", upload.single("thumbnail"), (req, res) => {
   console.log(req.body);
   const title = req.body["title"].trim();
+  const safeTitle = title.replace(/[<>:"\/\\|?*]+/g, "_");
   const category = req.body["categories"].trim();
   const author = req.body["author"].trim();
-  const _dirname = "submissions" + "/" + category + "/" + author;
+  const _dirname=path.join("submissions",category,author,safeTitle);
   const oldPath = req.file.path;
   const newPath = _dirname + "/" + req.file.filename;
   var content = req.body["blogContent"];
@@ -77,7 +80,7 @@ app.post("/submitBlog", upload.single("thumbnail"), (req, res) => {
 
     fs.rename(oldPath, newPath, (err) => {
       if (err) return res.status(500).send("Error moving file: ", err);
-      fs.writeFile(_dirname + "/" + title + ".txt", content, (err) => {
+      fs.writeFile(_dirname + "/blogContent.txt", content, (err) => {
         if (err) return res.status(500).send("Error writing file: " + err);
         res.send("Blog and Image saved successfully!");
       });
