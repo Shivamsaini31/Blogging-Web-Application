@@ -2,6 +2,7 @@ import express from "express";
 import fs from "fs";
 import multer from "multer";
 import path from "path";
+import { serialize } from "v8";
 const app = express();
 const port = 3000;
 
@@ -29,49 +30,55 @@ app.get("/", (req, res) => {
 });
 
 app.get("/createBlog", (req, res) => {
-  res.render("createBlog",{
-    category:"None"
+  res.render("createBlog", {
+    category: "None",
   });
 });
 
-app.get("/Technology", (req, res) => {
-  res.render("categoryWiseBlogs", {
-    category: "Technology",
+app.get("/:category", (req, res) => {
+  const category = req.params.category;
+  const categoryPath = path.join("submissions", category);
+  fs.readdir(categoryPath, (err, authors) => {
+    if (err) return res.status(404).send("Category not found!");
+    let blogs = [];
+    let sz = authors.length;
+    if (!sz)
+      res.render("categoryWiseBlogs.ejs", {
+        category: category,
+        blogs:[],
+      });
+    authors.forEach((author) => {
+      const authorPath = path.join(categoryPath, author);
+      fs.readdir(authorPath, (err, titles) => {
+        if (titles) {
+          titles.forEach((title) => {
+            blogs.push({
+              author,
+              title,
+              path: path.join(authorPath, title),
+            });
+          });
+        }
+        sz--;
+      if (sz == 0) {
+        console.log(blogs);
+        res.render("categoryWiseBlogs", {
+          category: category,
+          blogs:blogs,
+        });
+      }
+      });
+      
+    });
   });
 });
-app.get("/World", (req, res) => {
-  res.render("categoryWiseBlogs", {
-    category: "World",
-  });
-});
-app.get("/Culture", (req, res) => {
-  res.render("categoryWiseBlogs", {
-    category: "Culture",
-  });
-});
-app.get("/Politics", (req, res) => {
-  res.render("categoryWiseBlogs", {
-    category: "Politics",
-  });
-});
-app.get("/Design", (req, res) => {
-  res.render("categoryWiseBlogs", {
-    category: "Design",
-  });
-});
-app.get("/Business", (req, res) => {
-  res.render("categoryWiseBlogs", {
-    category: "Business",
-  });
-});
-
 app.post("/submitBlog", upload.single("thumbnail"), (req, res) => {
   console.log(req.body);
   const title = req.body["title"].trim();
   const safeTitle = title.replace(/[<>:"\/\\|?*]+/g, "_");
   const category = req.body["categories"].trim();
   const author = req.body["author"].trim();
-  const _dirname=path.join("submissions",category,author,safeTitle);
+  const _dirname = path.join("submissions", category, author, safeTitle);
   const oldPath = req.file.path;
   const newPath = _dirname + "/" + req.file.filename;
   var content = req.body["blogContent"];
