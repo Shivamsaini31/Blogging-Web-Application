@@ -2,15 +2,18 @@ import express from "express";
 import fs from "fs";
 import multer from "multer";
 import path from "path";
-import { serialize } from "v8";
+import {dirname} from "path";
+import  {fileURLToPath}  from "url";
+const _fileName=fileURLToPath(import.meta.url);
+const _dirName=dirname(_fileName);
 const app = express();
 const port = 3000;
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static("public"));
+app.use(express.static(path.join(_dirName, "public")));
 // app.use('/submissions', express.static(path.join(__dirname, 'submissions')));
-app.use("/submissions", express.static("submissions"));
+app.use("/submissions", express.static(path.join(_dirName,"submissions")));
 app.set("view engine", "ejs");
 
 const storage = multer.diskStorage({
@@ -38,7 +41,7 @@ app.get("/createBlog", (req, res) => {
 
 app.get("/:category", (req, res) => {
   const category = req.params.category;
-  const categoryPath = path.join("submissions", category);
+  const categoryPath = path.join(_dirName,"submissions", category);
   fs.readdir(categoryPath, (err, authors) => {
     if (err) return res.status(404).send("Category not found!");
     let blogs = [];
@@ -86,17 +89,17 @@ app.post("/submitBlog", upload.single("thumbnail"), (req, res) => {
   const safeTitle = title.replace(/[<>:"\/\\|?*]+/g, "_");
   const category = req.body["categories"].trim();
   const author = req.body["author"].trim();
-  const _dirname = path.join("submissions", category, author, safeTitle);
+  const blogDir = path.join(_dirName,"submissions", category, author, safeTitle);
   const oldPath = req.file.path;
-  const newPath = _dirname + "/" + req.file.filename;
+  const newPath = path.join(blogDir,req.file.filename);
   var content = req.body["blogContent"];
-  fs.mkdir(_dirname, { recursive: true }, (err) => {
+  fs.mkdir(blogDir, { recursive: true }, (err) => {
     if (err)
       return res.status(500).send("Error creating directory: " + err.message);
 
     fs.rename(oldPath, newPath, (err) => {
       if (err) return res.status(500).send("Error moving file: " + err.message);
-      fs.writeFile(_dirname + "/blogContent.txt", content, (err) => {
+      fs.writeFile(path.join(blogDir,"blogContent.txt"), content, (err) => {
         if (err)
           return res.status(500).send("Error writing file: " + err.message);
         res.send("Blog and Image saved successfully!");
