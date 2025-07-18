@@ -114,7 +114,10 @@ app.post("/submitBlog", upload.single("thumbnail"), (req, res) => {
       fs.writeFile(path.join(blogDir, "blogContent.txt"), content, (err) => {
         if (err)
           return res.status(500).send("Error writing file: " + err.message);
-        res.send("Blog and Image saved successfully!");
+        res.render("checkBlog.ejs",{
+          category:"None",
+          path:blogDir
+        });
       });
     });
   });
