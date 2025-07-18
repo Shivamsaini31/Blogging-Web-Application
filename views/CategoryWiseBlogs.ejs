@@ -10,6 +10,7 @@
       integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
       crossorigin="anonymous"
     />
+    <link href="/style.css" rel="stylesheet">
   </head>
   <%-include("partials/navbar.ejs")%>
 
@@ -20,16 +21,16 @@
         <div class="col">
           <div class="card shadow-sm">
               <img
-              src="<%=blog.path%>/thumbnail.jpg"
+              src="<%=blog.image%>"
               class="bd-placeholder-img card-img-top"
-              alt="<%=blog.path%>/thumbnail.jpg"
+              alt="<%=blog.image%>"
               height="200"
               width="100%"
               style="object-fit: cover"
             />
             <div class="card-body">
                 <h5><%=blog.title%></h5>
-              <p class="card-text">
+              <p class="card-text cardHeight">
                 <%=blog.blogContent%>
               </p>
               <div class="d-flex justify-content-between align-items-center">
