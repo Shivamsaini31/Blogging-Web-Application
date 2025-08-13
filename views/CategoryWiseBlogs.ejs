@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <title>The Blog Web Application</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
@@ -29,7 +30,7 @@
               style="object-fit: cover"
             />
             <div class="card-body">
-                <h5><%=blog.title%></h5>
+                <h5><%=blog.title.replace("_",":")%></h5>
               <p class="card-text cardHeight">
                 <%=blog.blogContent%>
               </p>

@@ -4,10 +4,15 @@ import multer from "multer";
 import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import dotenv from 'dotenv';
+
 const _fileName = fileURLToPath(import.meta.url);
 const _dirName = dirname(_fileName);
 const app = express();
-const port = 3000;
+
+
+dotenv.config();
+const port = process.env.PORT;
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -124,5 +129,5 @@ app.post("/submitBlog", upload.single("thumbnail"), (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Listening at port ${port}.`);
+  console.log(`Server running at port ${port}.`);
 });
