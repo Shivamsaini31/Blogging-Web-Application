@@ -2,7 +2,7 @@ import { sql } from "../config/db.js";
 
 export const getHomePage = (req, res) => {
   try {
-    res.render("index.ejs", {
+    res.render("index", {
       category: "Home",
     });
   } catch (error) {
@@ -20,7 +20,7 @@ export const getCategoryBlog = async (req, res) => {
     WHERE category=${category}
     ORDER BY created_at DESC
     `;
-    console.log("blogs:", blogs);
+
     res.render("CategoryWiseBlogs",{
         category:category,
         blogs:blogs,
@@ -47,11 +47,26 @@ export const getBlog = async (req, res) => {
   }
 };
 
+export const getCreateBlog=(req,res)=>{
+    try {
+    res.render("createBlog", {
+      category: "none",
+    });
+  } catch (error) {
+    console.log("Error loading Home Page: ", error);
+    res.sendStatus(500);
+  }
+}
+
 export const createBlog = async (req, res) => {
-    const {title, author,image, blogcontent,category}=req.body;
-    if (!title || !author || !image || !blogcontent || !category) {
+    console.log(req.body);
+    const {author, blogcontent, image, category,title}=req.body;
+    if (!title || !author|| !blogcontent || !category ||!image) {
         return res.status(400).send("All fields are required");
     }
+    // const image=req.file.buffer;
+    // console.log("Body: ",req.body);
+    // console.log("image: ",req.file);
     try {
         const submittedBlog=await sql `
         INSERT INTO blogs(title, author, image, blogcontent, category )
@@ -60,7 +75,7 @@ export const createBlog = async (req, res) => {
         `
         console.log(submittedBlog);
         res.render("checkBlog",{
-            submittedBlog:submittedBlog[0],
+            submittedBlog:submittedBlog[0].id,
             category:"none",
         })
     } catch (error) {

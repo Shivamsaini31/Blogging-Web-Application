@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Create Blog</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
@@ -11,25 +11,27 @@
       integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <%-include("partials/navbar.ejs")%>
     <div class="container text-center" style="background-color: #3D887F;">
-    <form action="/submitBlog" method="POST" enctype="multipart/form-data">
+    <form action="/api/blogs/createBlog" method="POST" >
         <h1>Write your blog!</h1>
 <div class="mb-3 text-center">
   <label for="title" class="form-label"><h3>Title<span class="text-danger">*</span></h3></label>
   <input type="text" class="form-control w-25 mx-auto" id="title" placeholder="Enter title of your blog" name="title" required>
 </div>
 <div class="mb-3">
-  <label for="blogContent" class="form-label">Blog Content<span class="text-danger">*</span></label>
-  <textarea class="form-control" id="blogContent" rows="14" name="blogContent" required></textarea>
+  <label for="blogcontent" class="form-label">Blog Content<span class="text-danger">*</span></label>
+  <textarea class="form-control" id="blogContent" rows="14" name="blogcontent" required></textarea>
+</div>
+<div class="mb-3 text-center">
+<label for="image" class="form-label">Enter URL for thumbnail of your blog<span class="text-danger">*</span></label>
+  <input type="text" class="form-control w-25 mx-auto" id="image" placeholder="https://example-image.com" name="image" required>
 </div>
 <div class="mb-3">
-  <label for="thumbnail" class="form-label">Upload a thumbnail for your Blog:<span class="text-danger">*</span></label>
-  <input type="file" class="form-control w-25 mx-auto btn btn-secondary" name="thumbnail" id="thumbnail">
-</div>
+
 <div class="row g-2">
   <div class="col-md">
     <div class="form-floating">
@@ -40,7 +42,7 @@
   <div class="col-md">
     <div class="form-floating">
         
-    <select class="form-select" id="categories" name="categories" required>
+    <select class="form-select" id="categories" name="category" required>
       <option selected>Choose...</option>
       <option value="World">World</option>
       <option value="Technology">Technology</option>

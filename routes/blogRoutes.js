@@ -1,11 +1,12 @@
 import express from "express";
-import {getBlog, createBlog, updateBlog, deleteBlog,getCategoryBlog} from "../controllers/blogControllers.js"
+import {getBlog, getCreateBlog, createBlog, updateBlog, deleteBlog,getCategoryBlog} from "../controllers/blogControllers.js"
 
 const router=express.Router();
-router.get("/:category",getCategoryBlog)
-router.get("/:id",getBlog);
-router.post("/",createBlog);
+router.get("/category/:category",getCategoryBlog)
+router.get("/",getCreateBlog);
+router.post("/createBlog",createBlog);
 router.put("/:id",updateBlog);
 router.delete("/:id",deleteBlog);
+router.get("/:id",getBlog);
 
 export default router;
