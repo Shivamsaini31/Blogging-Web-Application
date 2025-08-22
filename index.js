@@ -24,6 +24,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "views"));
 app.get("/", getHomePage);
 app.use("/api/blogs", blogRoutes);
+app.use("/blogs", blogRoutes);
 
 async function initDB() {
   try {

@@ -36,9 +36,9 @@ export const getCategoryBlog = async (req, res) => {
     res.sendStatus(404);
   }
 };
-// need to update view blog or getBlog function after creating viewBlog.ejs
 export const getBlog = async (req, res) => {
     const {id}=req.params;
+    console.log(req.body);
   try {
     const blog = await sql`
         SELECT * FROM blogs
