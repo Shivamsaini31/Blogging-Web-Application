@@ -43,7 +43,7 @@
             <p class="card-text mb-auto clamp-3">
               <%=blog.blogcontent%>
             </p>
-            <a href="<%= (blog.slug || blog.id || blog._id) ? ('/blog/' + (blog.slug || blog.id || blog._id)) : '#' %>" class="icon-link gap-1 icon-link-hover stretched-link">
+            <a href="api/blogs/<%=blog.id%>" class="icon-link gap-1 icon-link-hover stretched-link">
               Continue reading
               <svg class="bi" aria-hidden="true">
                 <use xlink:href="#chevron-right"></use>

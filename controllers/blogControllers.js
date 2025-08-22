@@ -46,7 +46,10 @@ export const getBlog = async (req, res) => {
         `;
     console.log("Fetched blog: ", blog);
     
-    res.status(200).render("");
+    res.status(200).render("blogPage.ejs",{
+        blog:blog[0],
+        category:"none",
+    });
   } catch (error) {
     console.log("Error fetching blog: ", error);
     res.status(500).send("Internal server error!");
