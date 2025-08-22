@@ -1,9 +1,15 @@
 import { sql } from "../config/db.js";
 
-export const getHomePage = (req, res) => {
+export const getHomePage = async(req, res) => {
   try {
+    const blogs=await sql `
+    SELECT * FROM blogs
+    ORDER BY created_at DESC
+    LIMIT 2
+    `
     res.render("index", {
       category: "Home",
+      blogs: blogs,
     });
   } catch (error) {
     console.log("Error loading Home Page: ", error);
