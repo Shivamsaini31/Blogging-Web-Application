@@ -17,64 +17,85 @@
   <body>
     <%- include("partials/navbar.ejs")%>
     <main class="container">
-    <div class="p-4 p-md-5 mb-4 d-flex rounded text-body-emphasis border text-center justify-content-center" style="background-color: #3D887F;">
-      <div class="col-lg-6 px-0">
-        <h1 class="display-4 fst-italic fw-bold text-light">
-          Create a Blog that people love!
-        </h1>
-          <a href="/createBlog" class="btn mt-2" style="background-color: #FFA500;">Start Blogging</a>
+      <div
+        class="p-4 p-md-5 mb-4 d-flex rounded text-body-emphasis border text-center justify-content-center"
+        style="background-color: #3d887f"
+      >
+        <div class="col-lg-6 px-0">
+          <h1 class="display-4 fst-italic fw-bold text-light">
+            Create a Blog that people love!
+          </h1>
+          <a
+            href="/createBlog"
+            class="btn mt-2"
+            style="background-color: #ffa500"
+            >Start Blogging</a
+          >
+        </div>
       </div>
-    </div>
-    <!-- blog cards -->
-    <div class="row mb-2">
-      <% blogs.forEach((blog) => { %>
-      <div class="col-md-6">
-        <div
-          class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative blog-card-anim elegant-card"
-        >
-          <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary-emphasis"
-              ><%=blog.category%></strong
-            >
-            <h3 class="mb-0"><%= blog.title || 'Featured post' %></h3>
-            <%const created=new Date(blog.created_at);%>
-            <%const options = { month: "short", day: "numeric" };const formatted = created.toLocaleDateString("en-US", options);%>
-            <div class="mb-1 text-body-secondary"><%=formatted%></div>
-            <p class="cardrs-text mb-auto clamp-3">
-            <p class="cardrs-text mb-auto clamp-3">
-              <%=blog.blogcontent%>
-            </p>
-            <a href="/blogs/<%=blog.id%>" class="icon-link gap-1 icon-link-hover stretched-link">
-              Continue reading
-              <svg class="bi" aria-hidden="true">
-                <use xlink:href="#chevron-right"></use>
-              </svg>
-            </a>
-          </div>
-          <div class="col-auto d-none d-lg-block">
 
-            <img src="<%=blog.image%>" alt="<%=blog.title%>" height="250" width="200" style="object-fit: cover"/>
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#55595c"></rect>
-              
-            </svg>
+      <!-- blog cards -->
+      <div class="row mb-2">
+        <% blogs.forEach((blog) => { %>
+        <div class="col-md-6">
+          <div
+            class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative blog-card-anim elegant-card"
+          >
+            <div class="col p-4 d-flex flex-column position-static">
+              <strong class="d-inline-block mb-2 text-primary-emphasis">
+                <%=blog.category%>
+              </strong>
+              <h3 class="mb-0"><%= blog.title || 'Featured post' %></h3>
+              <%const created=new Date(blog.created_at);%> <%const options = {
+              month: "short", day: "numeric" };const formatted =
+              created.toLocaleDateString("en-US", options);%>
+              <div class="mb-1 text-body-secondary"><%=formatted%></div>
+              <p class="card-text mb-auto clamp-3"><%=blog.blogcontent%></p>
+              <a
+                href="<%= (blog.slug || blog.id || blog._id) ? ('/blogs/' + (blog.slug || blog.id || blog._id)) : '#' %>"
+                class="icon-link gap-1 icon-link-hover stretched-link"
+              >
+                Continue reading
+                <svg class="bi" aria-hidden="true">
+                  <use xlink:href="#chevron-right"></use>
+                </svg>
+              </a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+              <img
+                src="<%=blog.image%>"
+                alt="<%=blog.title%>"
+                height="250"
+                width="200"
+                style="object-fit: cover"
+              />
+            </div>
           </div>
         </div>
-      </div>   
-      <% }) %> 
-    </div>
+        <% }) %>
+      </div>
     </main>
 
     <!-- Motion One (Framer) for card animations -->
     <script src="https://cdn.jsdelivr.net/npm/@motionone/dom/dist/motion.min.js"></script>
     <script>
-      (function(){
-        var cards = document.querySelectorAll('.blog-card-anim');
-        cards.forEach(function(card, idx){
+      (function () {
+        var cards = document.querySelectorAll(".blog-card-anim");
+        cards.forEach(function (card, idx) {
           if (window.motion && motion.animate) {
-            motion.animate(card, { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0)"] }, { duration: 0.5, delay: idx * 0.08, easing: "ease-out" });
+            motion.animate(
+              card,
+              {
+                opacity: [0, 1],
+                transform: ["translateY(16px)", "translateY(0)"],
+              },
+              { duration: 0.5, delay: idx * 0.08, easing: "ease-out" }
+            );
           }
         });
       })();
     </script>
-<%- include("partials/footer.ejs")%>
+
+    <%- include("partials/footer.ejs")%>
+  </body>
+</html>
