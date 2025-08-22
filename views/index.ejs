@@ -11,6 +11,7 @@
       integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
       crossorigin="anonymous"
     />
+    <link href="/style.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -24,24 +25,25 @@
           <a href="/createBlog" class="btn mt-2" style="background-color: #FFA500;">Start Blogging</a>
       </div>
     </div>
+    <!-- blog cards -->
     <div class="row mb-2">
       <% blogs.forEach((blog) => { %>
       <div class="col-md-6">
         <div
-          class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
+          class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative blog-card-anim elegant-card"
         >
           <div class="col p-4 d-flex flex-column position-static">
             <strong class="d-inline-block mb-2 text-primary-emphasis"
               ><%=blog.category%></strong
             >
-            <h3 class="mb-0">Featured post</h3>
+            <h3 class="mb-0"><%= blog.title || 'Featured post' %></h3>
             <%const created=new Date(blog.created_at);%>
             <%const options = { month: "short", day: "numeric" };const formatted = created.toLocaleDateString("en-US", options);%>
             <div class="mb-1 text-body-secondary"><%=formatted%></div>
-            <p class="card-text mb-auto overflow-hidden" style="max-height: 100px;">
+            <p class="card-text mb-auto clamp-3">
               <%=blog.blogcontent%>
             </p>
-            <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+            <a href="<%= (blog.slug || blog.id || blog._id) ? ('/blog/' + (blog.slug || blog.id || blog._id)) : '#' %>" class="icon-link gap-1 icon-link-hover stretched-link">
               Continue reading
               <svg class="bi" aria-hidden="true">
                 <use xlink:href="#chevron-right"></use>
@@ -49,15 +51,7 @@
             </a>
           </div>
           <div class="col-auto d-none d-lg-block">
-            <!-- <svg
-              aria-label="Placeholder: Thumbnail"
-              class="bd-placeholder-img"
-              height="250"
-              preserveAspectRatio="xMidYMid slice"
-              role="img"
-              width="200"
-              xmlns="http://www.w3.org/2000/svg"
-            > -->
+
             <img src="<%=blog.image%>" alt="<%=blog.title%>" height="250" width="200" style="object-fit: cover"/>
               <title>Placeholder</title>
               <rect width="100%" height="100%" fill="#55595c"></rect>
@@ -69,4 +63,17 @@
       <% }) %> 
     </div>
     </main>
+
+    <!-- Motion One (Framer) for card animations -->
+    <script src="https://cdn.jsdelivr.net/npm/@motionone/dom/dist/motion.min.js"></script>
+    <script>
+      (function(){
+        var cards = document.querySelectorAll('.blog-card-anim');
+        cards.forEach(function(card, idx){
+          if (window.motion && motion.animate) {
+            motion.animate(card, { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0)"] }, { duration: 0.5, delay: idx * 0.08, easing: "ease-out" });
+          }
+        });
+      })();
+    </script>
 <%- include("partials/footer.ejs")%>

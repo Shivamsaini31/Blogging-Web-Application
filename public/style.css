@@ -1,6 +1,66 @@
-.cardHeight{
-    overflow:hidden;
+.cardHeight {
+  overflow: hidden;
 }
-.cardContainer{
-    height:500px;
+.cardContainer {
+  height: 500px;
+}
+
+/* Reusable elegant card styles */
+.elegant-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+.elegant-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.elegant-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+.elegant-card:hover::before {
+  transform: scaleX(1);
+}
+.elegant-card img {
+  transition: transform 0.4s ease;
+}
+.elegant-card:hover img {
+  transform: scale(1.06);
+}
+.badge-category {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
+.clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 4.5em;
+}
+.muted {
+  color: #6b7280;
+}
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.btn-cta svg {
+  width: 16px;
+  height: 16px;
 }

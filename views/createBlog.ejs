@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Create Blog</title>
     <link
@@ -11,53 +11,152 @@
       integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+      /* Scoped overrides for create blog page */
+      .create-blog-page .btn-primary {
+        background-color: #22c55e;
+        border-color: #22c55e;
+      }
+      .create-blog-page .btn-primary:hover {
+        background-color: #16a34a;
+        border-color: #16a34a;
+      }
+      .create-blog-page .btn-primary:focus {
+        box-shadow: 0 0 0 0.25rem rgba(34, 197, 94, 0.35);
+      }
+      .create-blog-page .elegant-card::before {
+        background: linear-gradient(90deg, #22c55e, #16a34a);
+      }
+    </style>
+  </head>
+  <body>
     <%-include("partials/navbar.ejs")%>
-    <div class="container text-center" style="background-color: #3D887F;">
-    <form action="/api/blogs/createBlog" method="POST" >
-        <h1>Write your blog!</h1>
-<div class="mb-3 text-center">
-  <label for="title" class="form-label"><h3>Title<span class="text-danger">*</span></h3></label>
-  <input type="text" class="form-control w-25 mx-auto" id="title" placeholder="Enter title of your blog" name="title" required>
-</div>
-<div class="mb-3">
-  <label for="blogcontent" class="form-label">Blog Content<span class="text-danger">*</span></label>
-  <textarea class="form-control" id="blogContent" rows="14" name="blogcontent" required></textarea>
-</div>
-<div class="mb-3 text-center">
-<label for="image" class="form-label">Enter URL for thumbnail of your blog<span class="text-danger">*</span></label>
-  <input type="text" class="form-control w-25 mx-auto" id="image" placeholder="https://example-image.com" name="image" required>
-</div>
-<div class="mb-3">
 
-<div class="row g-2">
-  <div class="col-md">
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInputGrid" placeholder="Enter author name" name="author">
-      <label for="floatingInputGrid">Author</label>
-    </div>
-  </div>
-  <div class="col-md">
-    <div class="form-floating">
-        
-    <select class="form-select" id="categories" name="category" required>
-      <option selected>Choose...</option>
-      <option value="World">World</option>
-      <option value="Technology">Technology</option>
-      <option value="Design">Design</option>
-      <option value="Culture">Culture</option>
-      <option value="Business">Business</option>
-      <option value="Politics">Politics</option>
-    </select>
-    <label for="categories">Choose category of your blog:<span class="text-danger">*</span></label>
-    </div>
-  </div>
-</div>
-    <input type="submit" placeholder="submit" class="form-label btn btn-primary mt-2">
+    <div class="container py-5 create-blog-page">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="elegant-card shadow-sm create-form-anim">
+            <div class="p-4 p-md-5">
+              <h1 class="h3 mb-4">Write your blog!</h1>
+              <form action="/api/blogs/createBlog" method="POST">
+                <div class="mb-3">
+                  <label for="title" class="form-label"
+                    >Title<span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    placeholder="Enter title of your blog"
+                    name="title"
+                    required
+                  />
+                </div>
 
-    </form>
+                <div class="mb-3">
+                  <label for="blogContent" class="form-label"
+                    >Blog Content<span class="text-danger">*</span></label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="blogContent"
+                    rows="12"
+                    name="blogcontent"
+                    placeholder="Start writing here..."
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label for="image" class="form-label"
+                    >Thumbnail URL<span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="image"
+                    placeholder="https://example-image.com"
+                    name="image"
+                    required
+                  />
+                </div>
+
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="author"
+                        placeholder="Enter author name"
+                        name="author"
+                      />
+                      <label for="author">Author</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <select
+                        class="form-select"
+                        id="categories"
+                        name="category"
+                        required
+                      >
+                        <option selected>Choose...</option>
+                        <option value="World">World</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Design">Design</option>
+                        <option value="Culture">Culture</option>
+                        <option value="Business">Business</option>
+                        <option value="Politics">Politics</option>
+                      </select>
+                      <label for="categories"
+                        >Category<span class="text-danger">*</span></label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                  <a href="/" class="btn btn-outline-secondary">Cancel</a>
+                  <button type="submit" class="btn btn-primary btn-cta">
+                    Publish
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="22 2 11 13 7 9"></polyline>
+                      <polyline points="2 12 11 21 22 10"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/@motionone/dom/dist/motion.min.js"></script>
+    <script>
+      (function () {
+        var formCard = document.querySelector(".create-form-anim");
+        if (formCard && window.motion && motion.animate) {
+          motion.animate(
+            formCard,
+            {
+              opacity: [0, 1],
+              transform: ["translateY(16px)", "translateY(0)"],
+            },
+            { duration: 0.5, easing: "ease-out" }
+          );
+        }
+      })();
+    </script>
+  </body>
 </html>

@@ -11,23 +11,24 @@
       integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
       crossorigin="anonymous"
     />
-    <link href="/style.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet" />
   </head>
   <%-include("partials/navbar.ejs")%>
 
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
       <% if(blogs.length===0){%>
-          <div  class="d-flex justify-content-center">
-          <h2 class="text-center">No blogs in this category!</h2>
-          </div>
-        <%}else{%>
+      <div class="d-flex justify-content-center">
+        <h2 class="text-center">No blogs in this category!</h2>
+      </div>
+      <%}else{%>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        
-        <% blogs.forEach((blog)=>{%>
+        <% blogs.forEach((blog)=>{%> <% const created=new Date(blog.created_at);
+        const options={month:"short",day:"numeric"}; const
+        formatted=created.toLocaleDateString("en-US",options); %>
         <div class="col">
-          <div class="card shadow-sm">
-              <img
+          <div class="card shadow-sm cat-card-anim elegant-card">
+            <img
               src="<%=blog.image%>"
               class="bd-placeholder-img card-img-top"
               alt="<%=blog.title%>"
@@ -36,30 +37,63 @@
               style="object-fit: cover"
             />
             <div class="card-body">
-                <h5><%=blog.title.replace("_",":")%></h5>
-              <p class="card-text cardHeight">
-                <%=blog.blogcontent%>
-              </p>
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <span class="badge-category"><%= blog.category %></span>
+                <small class="muted"><%= formatted %></small>
+              </div>
+              <h5 class="card-title mb-2">
+                <%= (blog.title || '').replace("_",":") %>
+              </h5>
+              <p class="card-text mb-3 clamp-3"><%=blog.blogcontent%></p>
               <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                <a
+                  href="<%= (blog.slug || blog.id || blog._id) ? ('/blog/' + (blog.slug || blog.id || blog._id)) : '#' %>"
+                  class="btn btn-sm btn-outline-primary btn-cta"
+                >
+                  Continue reading
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   >
-                    View
-                  </button>
-                </div>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12,5 19,12 12,19"></polyline>
+                  </svg>
+                </a>
                 <small class="text-body-secondary"><%=blog.author%></small>
               </div>
             </div>
           </div>
         </div>
-        <% })%> 
-        
+        <% })%>
       </div>
       <%}%>
     </div>
   </div>
-  
+
+  <!-- Motion One (Framer) animations -->
+  <script src="https://cdn.jsdelivr.net/npm/@motionone/dom/dist/motion.min.js"></script>
+  <script>
+    (function () {
+      var cards = document.querySelectorAll(".cat-card-anim");
+      cards.forEach(function (card, idx) {
+        if (window.motion && motion.animate) {
+          motion.animate(
+            card,
+            {
+              opacity: [0, 1],
+              transform: ["translateY(16px)", "translateY(0)"],
+            },
+            { duration: 0.5, delay: idx * 0.08, easing: "ease-out" }
+          );
+        }
+      });
+    })();
+  </script>
   <%-include("partials/footer.ejs")%>
 </html>
