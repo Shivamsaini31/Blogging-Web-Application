@@ -40,10 +40,10 @@
             <%const created=new Date(blog.created_at);%>
             <%const options = { month: "short", day: "numeric" };const formatted = created.toLocaleDateString("en-US", options);%>
             <div class="mb-1 text-body-secondary"><%=formatted%></div>
-            <p class="card-text mb-auto clamp-3">
+            <p class="cardrs-text mb-auto clamp-3">
               <%=blog.blogcontent%>
             </p>
-            <a href="api/blogs/<%=blog.id%>" class="icon-link gap-1 icon-link-hover stretched-link">
+            <a href="/api/blogs/<%=blog.id%>" class="icon-link gap-1 icon-link-hover stretched-link">
               Continue reading
               <svg class="bi" aria-hidden="true">
                 <use xlink:href="#chevron-right"></use>
