@@ -1,21 +1,102 @@
-<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container">
-      <div class="nav-scroller py-1 mb-3 mt-1 border-bottom">
-        <nav class="nav nav-underline justify-content-between">
-          <a class="nav-item nav-link link-body-emphasis <%if(category==="Home"){%>active<%}%>" href="/"
-            >Home</a
+    <!-- Brand/Logo -->
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <div class="brand-icon me-2">
+        <i class="fas fa-pen-fancy"></i>
+      </div>
+      <span class="brand-text">BlogHub</span>
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button 
+      class="navbar-toggler" 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#navbarNav" 
+      aria-controls="navbarNav" 
+      aria-expanded="false" 
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a 
+            class="nav-link <%if(category==="Home"){%>active<%}%>" 
+            href="/"
           >
-          <a class="nav-item nav-link link-body-emphasis <%if(category==="World"){%>active<%}%>" href="/api/blogs/category/World"
-            >World</a
+            <i class="fas fa-home me-1"></i>Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link <%if(category==="World"){%>active<%}%>" 
+            href="/api/blogs/category/World"
           >
-          <a class="nav-item nav-link link-body-emphasis <%if(category==="Technology"){%>active<%}%>" href="/api/blogs/category/Technology"
-            >Technology</a
+            <i class="fas fa-globe me-1"></i>World
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link <%if(category==="Technology"){%>active<%}%>" 
+            href="/api/blogs/category/Technology"
           >
-          <a class="nav-item nav-link link-body-emphasis <%if(category==="Design"){%>active<%}%>" href="/api/blogs/category/Design">Design</a>
-          <a class="nav-item nav-link link-body-emphasis <%if(category==="Culture"){%>active<%}%>" href="/api/blogs/category/Culture">Culture</a>
-          <a class="nav-item nav-link link-body-emphasis <%if(category==="Business"){%>active<%}%>" href="/api/blogs/category/Business">Business</a>
-          <a class="nav-item nav-link link-body-emphasis <%if(category==="Politics"){%>active<%}%>" href="/api/blogs/category/Politics">Politics</a>
-          <a class="nav-item link-body-emphasis btn btn-success" href="/api/blogs">Create Blog</a>
-        </nav>
+            <i class="fas fa-microchip me-1"></i>Technology
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link <%if(category==="Design"){%>active<%}%>" 
+            href="/api/blogs/category/Design"
+          >
+            <i class="fas fa-palette me-1"></i>Design
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link <%if(category==="Culture"){%>active<%}%>" 
+            href="/api/blogs/category/Culture"
+          >
+            <i class="fas fa-theater-masks me-1"></i>Culture
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link <%if(category==="Business"){%>active<%}%>" 
+            href="/api/blogs/category/Business"
+          >
+            <i class="fas fa-briefcase me-1"></i>Business
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link <%if(category==="Politics"){%>active<%}%>" 
+            href="/api/blogs/category/Politics"
+          >
+            <i class="fas fa-landmark me-1"></i>Politics
+          </a>
+        </li>
+      </ul>
+
+      <!-- Right Side Actions -->
+      <div class="navbar-nav ms-auto">
+        <a 
+          class="nav-link create-blog-btn" 
+          href="/api/blogs"
+        >
+          <i class="fas fa-plus me-1"></i>Create Blog
+        </a>
       </div>
     </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+</nav>
+
+<!-- Spacer to prevent content from hiding behind fixed navbar -->
+<div class="navbar-spacer"></div>

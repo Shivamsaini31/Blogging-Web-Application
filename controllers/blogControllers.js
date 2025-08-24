@@ -5,7 +5,7 @@ export const getHomePage = async(req, res) => {
     const blogs=await sql `
     SELECT * FROM blogs
     ORDER BY created_at DESC
-    LIMIT 2
+    LIMIT 3
     `
     res.render("index", {
       category: "Home",
